@@ -1,0 +1,4 @@
+index.js:102 [Deprecation] URL.createObjectURL with media streams 
+is deprecated and will be removed in M68, around July 2018. 
+Please use HTMLMediaElement.srcObject instead. 
+See https://www.chromestatus.com/features/5618491470118912 for more details.
