@@ -1,8 +1,8 @@
 require('../shader/OscFragment');
 
-import dat from 'dat-gui';
+import dat from 'dat.gui';
 import THREE from '../Three';
-import Particle from '../shared/Particle-alt';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {

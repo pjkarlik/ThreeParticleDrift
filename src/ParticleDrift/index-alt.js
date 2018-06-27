@@ -1,6 +1,5 @@
-import dat from 'dat-gui';
 import THREE from '../Three';
-import Particle from '../shared/Particle-alt';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {
@@ -48,9 +47,9 @@ export default class Render {
       gravity: 0.0,
       bounce: 0.0,
     };
-    this.threshold = 0.3;
-    this.strength = 1.2;
-    this.radius = 0.45;
+    this.threshold = 0.56;
+    this.strength = 1.26;
+    this.radius = 0.75;
     this.camTimeoutx = true;
     this.camTimeouty = true;
     this.camTimeoutz = true;

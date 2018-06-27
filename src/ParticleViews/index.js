@@ -1,4 +1,4 @@
-import dat from 'dat-gui';
+import dat from 'dat.gui';
 import THREE from '../Three';
 import Particle from '../shared/Particle';
 

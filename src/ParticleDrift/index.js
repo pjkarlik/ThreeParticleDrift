@@ -1,6 +1,5 @@
-import dat from 'dat-gui';
 import THREE from '../Three';
-import Particle from '../shared/Particle-alt';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {
@@ -40,8 +39,6 @@ export default class Render {
     };
     window.addEventListener('resize', this.resize, true);
     this.setRender();
-    // this.setEffects();
-    // this.createGUI();
     this.renderLoop();
   }
 
@@ -51,23 +48,6 @@ export default class Render {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
   };
-  
-  createGUI = () => {
-    // this.options = {
-    //   gravity: this.settings.gravity * 100,
-    //   bounce: this.settings.bounce * 100
-    // };
-    // this.gui = new dat.GUI();
-    // const folderRender = this.gui.addFolder('Particle Options');
-    // folderRender.add(this.options, 'gravity', 0, 100).step(1)
-    //   .onFinishChange((value) => {
-    //     this.settings.gravity = value * 0.01;
-    //   });
-    // folderRender.add(this.options, 'bounce', 0, 100).step(1)
-    //   .onFinishChange((value) => {
-    //     this.settings.bounce = value * 0.01;
-    //   });
-  }
 
   setRender = () => {
     // Set Render and Scene //
@@ -106,25 +86,6 @@ export default class Render {
     this.scene.add(ambient);
   };
 
-  setEffects = () => {
-    // this.effect = new THREE.AnaglyphEffect(this.renderer);
-    // this.effect.setSize(this.width, this.height);
-    // let effect;
- 
-    // this.composer = new THREE.EffectComposer(this.renderer);
-    // this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
-
-    // effect = new THREE.ShaderPass(THREE.MirrorShader);
-    // effect.uniforms.side.value = 4;
-    // this.composer.addPass(effect);
-
-    // effect = new THREE.ShaderPass(THREE.RGBShiftShader);
-    // effect.uniforms.amount.value = 0.001;
-    // effect.uniforms.angle.value = 0.0;
-    // effect.renderToScreen = true;
-    // this.composer.addPass(effect);
-  }
-  
   hitRnd = () => {
     const { x, y, z } = this.emitter;
     const type = Math.random() * 100 > 94;

@@ -1,8 +1,5 @@
-// require('../shader/CubicFragment');
-
-import dat from 'dat-gui';
-import THREE from '../ThreeLight';
-import Particle from './Particle-alt';
+import THREE from '../Three';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {
@@ -29,7 +26,7 @@ export default class Render {
     this.mirror = 4;
     this.particles = [];
     this.particleColor = 360;
-    this.background = 0x232323;
+    this.background = 0xDDDDDD;
     this.emitter = {
       x: 0,
       y: 0,
@@ -56,12 +53,10 @@ export default class Render {
       bounce: 0.75,
     };
     window.addEventListener('resize', this.resize, true);
-    window.addEventListener('click', () => {
-      console.log(this.camera.position);
-    }, true);
+    // window.addEventListener('click', () => {
+    //   console.log(this.camera.position);
+    // }, true);
     this.setRender();
-    // this.setEffects();
-    // this.createGUI();
     this.renderLoop();
 
     this.camTimeoutx = true;
@@ -85,22 +80,6 @@ export default class Render {
     this.renderer.setSize(this.width, this.height);
   };
 
-  createGUI = () => {
-    // this.options = {
-    //   gravity: this.settings.gravity * 100,
-    //   bounce: this.settings.bounce * 100
-    // };
-    // this.gui = new dat.GUI();
-    // const folderRender = this.gui.addFolder('Particle Options');
-    // folderRender.add(this.options, 'gravity', 0, 100).step(1)
-    //   .onFinishChange((value) => {
-    //     this.settings.gravity = value * 0.01;
-    //   });
-    // folderRender.add(this.options, 'bounce', 0, 100).step(1)
-    //   .onFinishChange((value) => {
-    //     this.settings.bounce = value * 0.01;
-    //   });
-  }
 
   setRender = () => {
     // Set Render and Scene //
@@ -135,24 +114,6 @@ export default class Render {
     this.scene.add(ambient);
   };
 
-  setEffects = () => {
-    this.composer = new THREE.EffectComposer(this.renderer);
-    this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
-
-    const renderPass = new THREE.RenderPass(this.scene, this.camera);
-    this.composer.addPass(renderPass);
-
-    this.effect = new THREE.ShaderPass(THREE.MirrorShader);
-    this.effect.uniforms.side.value = this.mirror;
-
-    this.composer.addPass(this.effect);
-
-    this.rfrag = new THREE.ShaderPass(THREE.RenderFragment);
-    this.rfrag.uniforms.scale.value = this.scale;
-    this.rfrag.uniforms.ratio.value = this.ratio;
-    this.rfrag.renderToScreen = true;
-    this.composer.addPass(this.rfrag);
-  };
 
   distance = (x1, y1, x2, y2) => {
     const distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
@@ -210,12 +171,11 @@ export default class Render {
     }
     sphere.position.set(mx, my, mz);
 
-    const timez = this.frames * 0.1;
-    const particleColor = Math.abs(0.75 * Math.sin(this.frames * 0.35 * Math.PI / 180) * 0.75);
+    const particleColor = Math.abs(0.75 * Math.sin(this.frames * 0.15 * Math.PI / 180) * 0.75);
 
-    const cRed = Math.sin(particleColor * 10.0 - 5.0);
+    const cRed = Math.sin(particleColor * 12.0 - 3.0 * Math.PI / 180);
     const cGreen = particleColor;
-    const cBlue = Math.cos(particleColor * 10.0 - 5.0);
+    const cBlue = 1 - particleColor;
 
     sphere.material.color.setRGB(cRed, cGreen ,cBlue);
 
@@ -292,9 +252,7 @@ export default class Render {
   };
 
   renderScene = () => {
-    // this.composer.render();
     this.renderer.render(this.scene, this.camera);
-    // this.effect.render(this.scene, this.camera);
   };
 
   renderLoop = () => {
@@ -302,7 +260,6 @@ export default class Render {
 
     if(Math.random() * 255 > 230 && this.canSpeed){
       this.canSpeed = false;
-      // this.speed = 3.0 + Math.random() * 5;
       setTimeout(() => {
         this.canSpeed = true;
       }, 100 + Math.random() * 1000);

@@ -5,7 +5,7 @@
 
   /src/Three.js is the import file that combines all required Three.js package files into a window global.
 
-  ```
+  ```javascript
   import * as THREE from 'three'; // build/three.js from node_module/three
   window.THREE = THREE;
   require('three/examples/js/controls/OrbitControls.js');

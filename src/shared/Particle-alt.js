@@ -26,12 +26,10 @@ export default class Particle {
     const { gravity, bounce } = this.settings;
     if (this.y > this.box.top + this.size) {
       this.vy *= -bounce;
-      this.vx *= bounce;
       this.y = this.box.top;
     }
     if (this.y < this.box.bottom - this.size) {
       this.vy *= -bounce;
-      this.vx *= bounce;
       this.y = this.box.bottom;
     }
     if (this.x < this.box.left - this.size) {

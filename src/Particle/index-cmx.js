@@ -1,6 +1,6 @@
-import dat from 'dat-gui';
+import dat from 'dat.gui';
 import THREE from '../Three';
-import Particle from './Particle';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {
@@ -21,6 +21,7 @@ export default class Render {
     this.aspect = this.width / this.height;
     this.near = 0.1;
     this.far = 20000;
+    this.background = 0x646464;
     // Particles Stuff //
     this.particles = [];
     this.box = {
@@ -46,7 +47,7 @@ export default class Render {
     this.threshold = 0.6;
     this.strength = 2.0;
     this.radius = 0.85;
-    this.mirrorValue = 4;
+    this.mirrorValue = 1;
     this.size = 3.5;
     this.isWrireframe = false;
     this.camTimeoutx = true;
@@ -145,6 +146,9 @@ export default class Render {
 
     this.scene = new THREE.Scene();
     this.bufferScene = new THREE.Scene();
+
+    this.scene.fog = new THREE.FogExp2(this.background, 0.00095);
+    this.scene.background = new THREE.Color(this.background);
 
     this.camera = new THREE.PerspectiveCamera(
       this.viewAngle,
@@ -265,7 +269,6 @@ export default class Render {
       this.trsPosition.x = Math.random() * 255 > 200 ?
         Math.random() * 250 > 100 ? -(tempRand) : tempRand : 0;
       this.camTimeoutx = true;
-      console.log(this.trsPosition.x);
       setTimeout(
         () => { this.camTimeoutx = false; },
         6000 + (1000 * Math.random() * 20)
@@ -286,7 +289,6 @@ export default class Render {
       this.trsPosition.z = Math.random() * 255 > 200 ?
         Math.random() * 250 > 100 ? -(tempRand) : tempRand : 0;
       this.camTimeoutz = true;
-      console.log(this.trsPosition.z);
       setTimeout(
         () => { this.camTimeoutz = false; },
         6000 + (1000 * Math.random() * 20)

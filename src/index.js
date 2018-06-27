@@ -1,4 +1,4 @@
-import Render from './Particle/index-cmx.js';
+import Render from './ParticleViews/index.js';
 
 import { description, version } from '../version.json';
 

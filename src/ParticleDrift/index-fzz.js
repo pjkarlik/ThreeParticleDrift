@@ -1,7 +1,6 @@
 require('../shader/BWShiftFragment');
-import dat from 'dat-gui';
 import THREE from '../Three';
-import Particle from '../shared/Particle-alt';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {
@@ -68,7 +67,6 @@ export default class Render {
     window.addEventListener('resize', this.resize, true);
     this.setRender();
     this.setEffects();
-    // this.createGUI();
     this.renderLoop();
     // this.music();
   }
@@ -79,24 +77,7 @@ export default class Render {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
   };
-  
-  createGUI = () => {
-    // this.options = {
-    //   gravity: this.settings.gravity * 100,
-    //   bounce: this.settings.bounce * 100
-    // };
-    // this.gui = new dat.GUI();
-    // const folderRender = this.gui.addFolder('Particle Options');
-    // folderRender.add(this.options, 'gravity', 0, 100).step(1)
-    //   .onFinishChange((value) => {
-    //     this.settings.gravity = value * 0.01;
-    //   });
-    // folderRender.add(this.options, 'bounce', 0, 100).step(1)
-    //   .onFinishChange((value) => {
-    //     this.settings.bounce = value * 0.01;
-    //   });
-  }
-
+ 
   setRender = () => {
     // Set Render and Scene //
     this.renderer = new THREE.WebGLRenderer();
@@ -202,6 +183,7 @@ export default class Render {
       vz: this.speed,
       box: this.box,
       settings: this.settings,
+      decay: 0.00001,
       ref: sphere, 
       decay: 0.00001
     });

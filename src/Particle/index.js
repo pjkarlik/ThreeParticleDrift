@@ -1,6 +1,6 @@
-import dat from 'dat-gui';
+import dat from 'dat.gui';
 import THREE from '../Three';
-import Particle from './Particle';
+import Particle from '../shared/Particle';
 
 // Render Class Object //
 export default class Render {
@@ -25,13 +25,20 @@ export default class Render {
     this.particles = [];
     this.box = {
       top: 3000,
-      left: -3000,
+      left: -6000,
       bottom: -200,
-      right: 3000,
+      right: 6000,
+      front: 6000,
+      back: -6000
     };
     this.settings = {
-      gravity: 0.9,
+      gravity: 0.1,
       bounce: 0.35,
+    };
+    this.emitter = {
+      x: 0,
+      y: 300,
+      z: 0
     };
     this.threshold = 0.6;
     this.strength = 2.0;
@@ -40,7 +47,8 @@ export default class Render {
     this.size = 3.5;
     this.isWrireframe = false;
     window.addEventListener('resize', this.resize, true);
-    // window.addEventListener('click', () => { console.log(this.camera.position); }, false);
+    window.addEventListener('mousemove', this.moveEmitter, true);
+    window.addEventListener('click', () => { console.log(this.camera.rotation); }, false);
     this.setRender();
     this.setEffects();
     this.createGUI();
@@ -149,7 +157,6 @@ export default class Render {
   };
 
   setEffects = () => {
-    let effect;
     this.composer = new THREE.EffectComposer(this.renderer);
     this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
 
@@ -171,7 +178,8 @@ export default class Render {
   hitRnd = () => {
     const amount = 6 + Math.abs(Math.random() * 19);
     for (let i = 0; i < amount; i++) {
-      this.makeParticle(0, 300, 0);
+
+      this.makeParticle(this.emitter.x, this.emitter.y, this.emitter.z);
     }
   }
 
@@ -192,6 +200,9 @@ export default class Render {
       x: mx,
       y: my,
       z: mz,
+      vx: 0,
+      vy: 0,
+      vz: 0,
       box: this.box,
       settings: this.settings,
       ref: sphere
@@ -207,7 +218,7 @@ export default class Render {
     for (let i = 0; i < this.particles.length; i++) {
       const part = this.particles[i];
       part.update();
-      part.x += 10.5;
+      part.x;
       part.ref.position.set(
         part.x, 
         part.y, 
@@ -226,6 +237,16 @@ export default class Render {
     }
   };
 
+  moveEmitter = (e) => {
+    const x = ((this.width / 2) - e.clientX) * 0.75;
+    const z = 0;
+    const y = ((this.height / 2) - e.clientY) * 0.75;
+
+    this.emitter.x = x;
+    this.emitter.y = y;
+    this.emitter.z = z;
+  };
+
   renderScene = () => {
     this.composer.render();
     // this.renderer.render(this.scene, this.camera);
@@ -234,7 +255,7 @@ export default class Render {
 
   renderLoop = () => {
     this.checkParticles();
-    if(Math.random() * 200 > 100 && this.particles.length < 2000) {
+    if(this.frames % 1 == 0 && this.particles.length < 2000) {
       this.hitRnd();
     }
     this.renderScene();
