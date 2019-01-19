@@ -1,13 +1,11 @@
-/* eslint no-console: 0 */
-
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const pkgInfo = require('./package.json');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const DEV_PORT = 2020;
+const DEV_PORT = 2022;
 const { name, version, description, repository } = pkgInfo;
 const { url } = repository;
 
@@ -16,6 +14,7 @@ fs.writeFileSync('version.json', JSON.stringify({ name, version, description, ur
 const config = {
   name: 'ThreeParticleDrift',
   target: 'web',
+  mode: 'development',
   devServer: {
     disableHostCheck: true,
     host: '0.0.0.0',
@@ -58,32 +57,6 @@ const config = {
           'css-loader'
         ]
       },
-      // LESS loading if required
-      // {
-      //   test: /\.less$/,
-      //   use: ExtractTextPlugin.extract({
-      //     fallback: 'style-loader',
-      //     use: [
-      //       {
-      //         loader: 'css-loader',
-      //         options: {
-      //           modules: true,
-      //           importLoaders: 1,
-      //           localIdentName: '[name]__[local]___[hash:base64:5]'
-      //         }
-      //       },
-      //       {
-      //         loader: 'postcss-loader',
-      //         options: {
-      //           plugins: () => [AutoPrefixer]
-      //         }
-      //       },
-      //       'less-loader'
-      //     ],
-      //     publicPath: '../'
-      //   })
-      // },
-      // Image loading if required
       {
         test: /\.(png|gif|cur|jpg)$/,
         use: [
@@ -107,18 +80,6 @@ const config = {
           }
         ]
       },
-      // Font loading if required
-      // {
-      //   test: /\.(woff2|woff|eot|ttf|svg)$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader',
-      //       options: {
-      //         name: 'fonts/[name]_[hash:base64:5].[ext]'
-      //       }
-      //     }
-      //   ]
-      // },
       {
         test: /\.js$/,
         enforce: 'pre',
@@ -134,8 +95,8 @@ const config = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'styles/[name].[contenthash].css',
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
       allChunks: true
     }),
     new HtmlWebpackPlugin({
