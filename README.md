@@ -8,9 +8,7 @@
   - http://basic-particles.surge.sh/
   - http://bloomdrift.surge.sh/
   - http://bloommirror.surge.sh/
-  - http://lorndrift.surge.sh/
  
-
 
   /src/Three.js is the import file that combines all required Three.js package files into a window global.
 
