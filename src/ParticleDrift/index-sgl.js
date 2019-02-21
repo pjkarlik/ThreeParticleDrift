@@ -79,7 +79,7 @@ export default class Render {
     this.setEffects();
     // this.createGUI();
     this.renderLoop();
-    // this.music();
+    // this.music('n6tVkGsaE94', 'LORN');
   }
 
   resize = () => {
@@ -148,38 +148,40 @@ export default class Render {
     this.scene.add(ambient);
   };
 
-  music = () => {
+  music = (videoID, songTitle) => {
     const youtube = document.createElement('iframe');
+    const videoURL = `https://www.youtube.com/embed/${videoID}?rel=0&autoplay=1`;
+    const thumbURL = `https://img.youtube.com/vi/${videoID}/sddefault.jpg`;
     youtube.width=1;
     youtube.height=1;
-    const videoid = '3vnZnuqgh7U';
     youtube.wmode='transparent';
-    const html ='https://www.youtube.com/embed/n6tVkGsaE94?rel=0&autoplay=1';
-    youtube.src = encodeURI(html); // 'data:text/html;charset=utf-8,' + // e4GJsV3PzsI // gkyFQTUR-rA
+
+    youtube.src = encodeURI(videoURL); // 'data:text/html;charset=utf-8,' +
     youtube.frameborder=0;
     document.body.appendChild(youtube);
     const overlay = document.createElement('div');
     const link = document.createElement('a');
     const image = document.createElement('img');
-    image.src = 'https://img.youtube.com/vi/n6tVkGsaE94/sddefault.jpg';
+    image.src = thumbURL;
     image.width = 60;
     image.height = 45;
     image.style.float = 'left';
     image.style.margin = '0 0 0 15px';
-    link.href = html;
-    link.innerHTML = 'Music by Lorn | Shelter';
     overlay.style.position = 'absolute';
     overlay.style.bottom = '15px';
     overlay.style.left = '0';
     overlay.style.lineHeight = '45px';
     overlay.style.zIndex = '9999';
+    link.href = videoURL;
+    link.innerHTML = songTitle;
+    link.style.textDecoration = 'none';
     link.style.color = '#FFF';
     link.style.padding = '15px';
+    link.style.fontSize = '12px';
     overlay.appendChild(image);
     overlay.appendChild(link);
     document.body.appendChild(overlay);
-  }
-
+  };
   setEffects = () => {
     // this.effect = new THREE.AnaglyphEffect(this.renderer);
     // this.effect.setSize(this.width, this.height);
